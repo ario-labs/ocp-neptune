@@ -1,0 +1,4 @@
+.decrypted~*
+.DS_Store
+*.key
+kubeconfig

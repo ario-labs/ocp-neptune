@@ -1,0 +1,24 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  apps:
+    desc: "Bootstrap applications on the cluster"
+    env: { NS: flux-system }
+    cmds:
+      - oc get namespace ${NS} >/dev/null 2>&1 || oc create namespace ${NS}
+      - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:helm-controller
+      - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:image-automation-controller
+      - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:image-reflector-controller
+      - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:kustomize-controller
+      - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:notification-controller
+      - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:source-controller
+      - op run --env-file {{.OPENSHIFT_DIR}}/bootstrap/apps/.secrets.env --no-masking -- minijinja-cli {{.OPENSHIFT_DIR}}/bootstrap/apps/templates/resources.yaml.j2 | oc apply --server-side --filename -
+      - kubectl apply --server-side --kustomize {{.OPENSHIFT_DIR}}/bootstrap/apps
+    preconditions:
+      - op user get --me
+      - oc config view
+      - test -f {{.OPENSHIFT_DIR}}/kubeconfig
+      - test -f {{.OPENSHIFT_DIR}}/bootstrap/apps/templates/resources.yaml.j2
+      - which op oc minijinja-cli
