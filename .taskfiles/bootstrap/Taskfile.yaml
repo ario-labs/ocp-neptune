@@ -5,7 +5,10 @@ version: "3"
 tasks:
   apps:
     desc: "Bootstrap applications on the cluster"
-    env: { NS: flux-system }
+    env:
+      NS: flux-system
+      FLUX_GITHUB_PUBLIC_KEYS:
+        sh: curl -fsSL https://api.github.com/meta | jq --raw-output '"github.com "+.ssh_keys[]'
     cmds:
       - oc get namespace ${NS} >/dev/null 2>&1 || oc create namespace ${NS}
       - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:helm-controller
@@ -15,10 +18,13 @@ tasks:
       - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:notification-controller
       - oc adm policy add-scc-to-user nonroot system:serviceaccount:${NS}:source-controller
       - op run --env-file {{.OPENSHIFT_DIR}}/bootstrap/apps/.secrets.env --no-masking -- minijinja-cli {{.OPENSHIFT_DIR}}/bootstrap/apps/templates/resources.yaml.j2 | oc apply --server-side --filename -
-      - kubectl apply --server-side --kustomize {{.OPENSHIFT_DIR}}/bootstrap/apps
+      - oc apply --server-side --kustomize {{.OPENSHIFT_DIR}}/bootstrap/apps
+      - sops --decrypt {{.OPENSHIFT_DIR}}/flux/vars/cluster-secrets.sops.yaml | oc apply --server-side --filename -
+      - oc apply --server-side --filename {{.OPENSHIFT_DIR}}/flux/vars/cluster-settings.yaml
+      - oc apply --server-side --kustomize {{.OPENSHIFT_DIR}}/flux/config
     preconditions:
       - op user get --me
       - oc config view
       - test -f {{.OPENSHIFT_DIR}}/kubeconfig
       - test -f {{.OPENSHIFT_DIR}}/bootstrap/apps/templates/resources.yaml.j2
-      - which op oc minijinja-cli
+      - which op oc jq minijinja-cli
