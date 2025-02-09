@@ -32,7 +32,6 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: onepassword-store
-      namespace: external-secrets
   interval: 30m
   path: ./openshift/apps/cert-manager/cert-manager/issuers
   prune: true
@@ -56,9 +55,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: cert-manager-issuers
-      namespace: cert-manager
     - name: onepassword-store
-      namespace: external-secrets
   interval: 30m
   path: ./openshift/apps/cert-manager/cert-manager/tls
   prune: true
