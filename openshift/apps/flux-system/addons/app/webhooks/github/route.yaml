@@ -8,9 +8,10 @@ spec:
   path: /hook/
   tls:
     termination: edge
+    insecureEdgeTerminationPolicy: Redirect
   to:
     kind: Service
     name: webhook-receiver
     weight: 100
   port:
-    targetPort: 80
+    targetPort: http
