@@ -19,7 +19,8 @@ spec:
     postgres_configuration_secret: automation-controller-postgres-secret
     secret_key_secret: automation-controller-postgres-secret
   eda:
-    postgres_configuration_secret: eda-controller-postgres-secret
+    database:
+      database_secret: eda-controller-postgres-secret
     db_fields_encryption_secret: eda-controller-postgres-secret
   hub:
     storage_type: S3
