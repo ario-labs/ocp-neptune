@@ -1,0 +1,28 @@
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: demo
+spec:
+  route_tls_termination_mechanism: Edge
+  service_type: ClusterIP
+  ingress_type: Route
+  route_host: demo.${SECRET_DOMAIN}
+  no_log: true
+  hostname: demo.${SECRET_DOMAIN}
+  redis_mode: cluster
+  db_fields_encryption_secret: automation-gateway-postgres-secret
+  admin_password_secret: admin-password-secret
+  database:
+    database_secret: automation-gateway-postgres-secret
+  controller:
+    postgres_configuration_secret: automation-controller-postgres-secret
+    secret_key_secret: automation-controller-postgres-secret
+  eda:
+    postgres_configuration_secret: eda-controller-postgres-secret
+    db_fields_encryption_secret: eda-controller-postgres-secret
+  hub:
+    storage_type: S3
+    object_storage_s3_secret: automation-hub-s3-secret
+    postgres_configuration_secret: automation-hub-postgres-secret
+    secret_key_secret: automation-hub-postgres-secret
