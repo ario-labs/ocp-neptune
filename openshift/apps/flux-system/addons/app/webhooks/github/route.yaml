@@ -6,6 +6,8 @@ metadata:
 spec:
   host: flux-webhook.${SECRET_DOMAIN}
   path: /hook/
+  tls:
+    termination: edge
   to:
     kind: Service
     name: webhook-receiver
