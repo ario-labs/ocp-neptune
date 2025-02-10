@@ -6,4 +6,5 @@ namespace: flux-system
 resources:
   - ./bjw-s.yaml
   - ./external-secrets.yaml
+  - ./hashicorp.yaml
   - ./jetstack.yaml
