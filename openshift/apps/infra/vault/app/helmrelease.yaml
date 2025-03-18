@@ -31,6 +31,9 @@ spec:
       openshift: true
     server:
       enabled: true
+      image:
+        repository: "hashicorp/vault"
+        tag: "1.19.0"
       updateStrategyType: RollingUpdate
       readinessProbe:
         enabled: true
