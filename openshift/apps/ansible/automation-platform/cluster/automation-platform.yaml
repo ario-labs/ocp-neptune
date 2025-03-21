@@ -28,3 +28,5 @@ spec:
     object_storage_s3_secret: automation-hub-s3-secret
     postgres_configuration_secret: automation-hub-postgres-secret
     secret_key_secret: automation-hub-postgres-secret
+    worker:
+      replicas: 3
