@@ -19,6 +19,7 @@ spec:
     postgres_configuration_secret: automation-controller-postgres-secret
     secret_key_secret: automation-controller-postgres-secret
     control_plane_ee_image: demo.ansible.show/ee-supported-rhel9:latest
+    replicas: 3
   eda:
     database:
       database_secret: eda-controller-postgres-secret
