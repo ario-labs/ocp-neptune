@@ -32,7 +32,7 @@ spec:
     server:
       enabled: true
       image:
-        repository: "hashicorp/vault"
+        repository: "docker.io/hashicorp/vault"
         tag: "1.19.5"
       updateStrategyType: RollingUpdate
       readinessProbe:
