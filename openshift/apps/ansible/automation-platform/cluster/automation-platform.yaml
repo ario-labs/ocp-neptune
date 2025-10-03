@@ -31,5 +31,3 @@ spec:
     secret_key_secret: automation-hub-postgres-secret
     worker:
       replicas: 2
-    pulp_settings:
-      DYNACONF_AFTER_GET_HOOKS: null
