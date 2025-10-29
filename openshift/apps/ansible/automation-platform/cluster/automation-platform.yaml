@@ -31,3 +31,8 @@ spec:
     secret_key_secret: automation-hub-postgres-secret
     worker:
       replicas: 2
+  lightspeed:
+    disabled: false
+    chatbot_config_secret_name: chatbot-configuration-secret
+    database: { database_secret: chatbot-postgres-secret }
+    db_fields_encryption_secret: chatbot-postgres-secret
