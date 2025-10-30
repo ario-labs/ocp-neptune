@@ -28,3 +28,13 @@ tasks:
       - test -f {{.OPENSHIFT_DIR}}/kubeconfig
       - test -f {{.OPENSHIFT_DIR}}/bootstrap/apps/templates/resources.yaml.j2
       - which op oc jq minijinja-cli
+  sync-secrets:
+    desc: Sync all ExternalSecrets
+    cmds:
+      - for: { var: SECRETS, split: "\n" }
+        cmd: kubectl --namespace {{splitList "," .ITEM | first}} annotate externalsecret {{splitList "," .ITEM | last}} force-sync="{{now | unixEpoch}}" --overwrite
+    vars:
+      SECRETS:
+        sh: kubectl get externalsecret --all-namespaces --no-headers --output=jsonpath='{range .items[*]}{.metadata.namespace},{.metadata.name}{"\n"}{end}'
+    preconditions:
+      - which kubectl
