@@ -40,3 +40,4 @@ spec:
     disabled: false
     allow_write_operations: true
     public_base_url: https://demo.ansible.show
+    route_host: https://ansible-mcp.ansible.show
