@@ -36,3 +36,7 @@ spec:
     chatbot_config_secret_name: chatbot-configuration-secret
     database: { database_secret: chatbot-postgres-secret }
     db_fields_encryption_secret: chatbot-postgres-secret
+  mcp:
+    disabled: false
+    allow_write_operations: true
+    public_base_url: https://demo.ansible.show
