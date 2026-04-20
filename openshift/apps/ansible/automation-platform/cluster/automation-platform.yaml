@@ -10,9 +10,13 @@ spec:
   route_host: demo.${SECRET_DOMAIN}
   no_log: true
   hostname: demo.${SECRET_DOMAIN}
-  redis_mode: cluster
+  redis_mode: standalone
+  redis:
+    replicas: 1
   db_fields_encryption_secret: automation-gateway-postgres-secret
   admin_password_secret: admin-password-secret
+  api:
+    replicas: 1
   database:
     database_secret: automation-gateway-postgres-secret
   controller:
@@ -24,13 +28,29 @@ spec:
     database:
       database_secret: eda-controller-postgres-secret
     db_fields_encryption_secret: eda-controller-postgres-secret
+    scheduler:
+      replicas: 1
+    default_worker:
+      replicas: 1
+    activation_worker:
+      replicas: 1
+    redis:
+      replicas: 1
+    event_stream:
+      replicas: 1
   hub:
     storage_type: S3
     object_storage_s3_secret: automation-hub-s3-secret
     postgres_configuration_secret: automation-hub-postgres-secret
     secret_key_secret: automation-hub-postgres-secret
+    api:
+      replicas: 1
+    content:
+      replicas: 1
+    web:
+      replicas: 1
     worker:
-      replicas: 2
+      replicas: 1
   lightspeed:
     disabled: false
     chatbot_config_secret_name: chatbot-configuration-secret

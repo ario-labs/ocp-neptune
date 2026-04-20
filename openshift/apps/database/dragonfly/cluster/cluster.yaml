@@ -6,7 +6,7 @@ metadata:
   name: dragonfly
 spec:
   image: ghcr.io/dragonflydb/dragonfly:v1.23.1
-  replicas: 3 # set to the number of nodes in the cluster
+  replicas: 1
   skipFSGroup: true
   env:
     - name: MAX_MEMORY
@@ -17,7 +17,6 @@ spec:
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=2
-    - --cluster_mode=emulated
   resources:
     requests:
       cpu: 100m
