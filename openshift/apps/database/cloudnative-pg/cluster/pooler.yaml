@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/pooler_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: postgres-pooler-rw
+spec:
+  cluster:
+    name: postgres
+  instances: 2
+  type: rw
+  pgbouncer:
+    poolMode: transaction
+    parameters:
+      default_pool_size: "10"
+      max_client_conn: "200"
+      reserve_pool_size: "5"
+  template:
+    spec:
+      containers:
+        - name: pgbouncer
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
