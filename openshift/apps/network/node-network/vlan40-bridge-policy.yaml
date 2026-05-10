@@ -1,0 +1,42 @@
+---
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: vlan40-bridge-policy
+spec:
+  desiredState:
+    interfaces:
+      - name: enp2s0
+        type: ethernet
+        state: up
+        mtu: 9100
+        ipv4:
+          enabled: false
+        ipv6:
+          enabled: false
+      - name: br-ex
+        type: ovs-interface
+        state: up
+        mtu: 9100
+      - name: enp2s0.40
+        type: vlan
+        state: up
+        mtu: 9100
+        vlan:
+          base-iface: enp2s0
+          id: 40
+        ipv4:
+          enabled: false
+        ipv6:
+          enabled: false
+      - name: br40
+        type: linux-bridge
+        state: up
+        mtu: 9100
+        bridge:
+          port:
+            - name: enp2s0.40
+        ipv4:
+          enabled: false
+        ipv6:
+          enabled: false
