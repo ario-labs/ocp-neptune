@@ -6,4 +6,6 @@ metadata:
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
   labels:
+    cluster.ocs.openshift.io/openshift-storage: ""
     kubernetes.io/hostname: neptune02
+    node.ocs.openshift.io/storage: "true"
