@@ -10,15 +10,7 @@ spec:
     ignition:
       version: 3.2.0
     storage:
-      directories:
-        - path: /etc/nmstate/openshift
-          mode: 493
       files:
-        - path: /etc/nmstate/openshift/applied
-          mode: 420
-          overwrite: true
-          contents:
-            source: data:text/plain;charset=utf-8;base64,
         - path: /usr/local/sbin/ensure-neptune-network
           mode: 493
           overwrite: true
@@ -28,7 +20,7 @@ spec:
           mode: 420
           overwrite: true
           contents:
-            source: data:text/plain;charset=utf-8;base64,W1VuaXRdCkRlc2NyaXB0aW9uPUVuc3VyZSBOZXB0dW5lIE9WUyBicmlkZ2UgYW5kIE1UVSBiZWZvcmUga3ViZWxldApXYW50cz1OZXR3b3JrTWFuYWdlci5zZXJ2aWNlIG9wZW52c3dpdGNoLnNlcnZpY2UKQWZ0ZXI9TmV0d29ya01hbmFnZXIuc2VydmljZSBvcGVudnN3aXRjaC5zZXJ2aWNlCkJlZm9yZT1OZXR3b3JrTWFuYWdlci13YWl0LW9ubGluZS5zZXJ2aWNlIG5vZGVpcC1jb25maWd1cmF0aW9uLnNlcnZpY2Ugb3ZzLWNvbmZpZ3VyYXRpb24uc2VydmljZSBrdWJlbGV0LWRlcGVuZGVuY2llcy50YXJnZXQKCltTZXJ2aWNlXQpUeXBlPW9uZXNob3QKRXhlY1N0YXJ0PS91c3IvbG9jYWwvc2Jpbi9lbnN1cmUtbmVwdHVuZS1uZXR3b3JrClJlbWFpbkFmdGVyRXhpdD15ZXMKVGltZW91dFN0YXJ0U2VjPTE4MApTdGFuZGFyZE91dHB1dD1qb3VybmFsK2NvbnNvbGUKU3RhbmRhcmRFcnJvcj1qb3VybmFsK2NvbnNvbGUKCltJbnN0YWxsXQpSZXF1aXJlZEJ5PWt1YmVsZXQtZGVwZW5kZW5jaWVzLnRhcmdldAo=
+            source: data:text/plain;charset=utf-8;base64,W1VuaXRdCkRlc2NyaXB0aW9uPUVuc3VyZSBOZXB0dW5lIE9WUyBicmlkZ2UgYW5kIE1UVSBiZWZvcmUga3ViZWxldApXYW50cz1OZXR3b3JrTWFuYWdlci5zZXJ2aWNlIG9wZW52c3dpdGNoLnNlcnZpY2UKQWZ0ZXI9TmV0d29ya01hbmFnZXIuc2VydmljZSBvcGVudnN3aXRjaC5zZXJ2aWNlCkJlZm9yZT1OZXR3b3JrTWFuYWdlci13YWl0LW9ubGluZS5zZXJ2aWNlIG5vZGVpcC1jb25maWd1cmF0aW9uLnNlcnZpY2Ugb3ZzLWNvbmZpZ3VyYXRpb24uc2VydmljZSBrdWJlbGV0LWRlcGVuZGVuY2llcy50YXJnZXQKCltTZXJ2aWNlXQpUeXBlPW9uZXNob3QKRXhlY1N0YXJ0UHJlPS91c3IvYmluL21rZGlyIC1wIC9ldGMvbm1zdGF0ZS9vcGVuc2hpZnQKRXhlY1N0YXJ0UHJlPS91c3IvYmluL3RvdWNoIC9ldGMvbm1zdGF0ZS9vcGVuc2hpZnQvYXBwbGllZApFeGVjU3RhcnQ9L3Vzci9sb2NhbC9zYmluL2Vuc3VyZS1uZXB0dW5lLW5ldHdvcmsKUmVtYWluQWZ0ZXJFeGl0PXllcwpUaW1lb3V0U3RhcnRTZWM9MTgwClN0YW5kYXJkT3V0cHV0PWpvdXJuYWwrY29uc29sZQpTdGFuZGFyZEVycm9yPWpvdXJuYWwrY29uc29sZQoKW0luc3RhbGxdClJlcXVpcmVkQnk9a3ViZWxldC1kZXBlbmRlbmNpZXMudGFyZ2V0Cg==
     systemd:
       units:
         - name: ensure-neptune-network.service
