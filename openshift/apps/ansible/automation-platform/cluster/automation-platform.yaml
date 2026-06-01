@@ -22,7 +22,7 @@ spec:
   controller:
     postgres_configuration_secret: automation-controller-postgres-secret
     secret_key_secret: automation-controller-postgres-secret
-    control_plane_ee_image: demo.ansible.show/ee-supported-rhel9:latest
+    control_plane_ee_image: registry.redhat.io/ansible-automation-platform-27/ee-supported-rhel9@sha256:c640e8f7478f6a38acbc610acf831c05378122b7873f18263cb648f79b6e8850
     replicas: 1
   eda:
     database:
