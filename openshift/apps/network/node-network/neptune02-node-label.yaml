@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Node
 metadata:
-  name: neptune02.ocp.home.arpa
+  name: neptune02
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
   labels:
