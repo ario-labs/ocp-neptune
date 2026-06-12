@@ -12,7 +12,7 @@ kind: Subscription
 metadata:
   name: ansible-automation-platform-operator
 spec:
-  channel: stable-2.6
+  channel: stable-2.7
   installPlanApproval: Automatic
   name: ansible-automation-platform-operator
   source: redhat-operators
