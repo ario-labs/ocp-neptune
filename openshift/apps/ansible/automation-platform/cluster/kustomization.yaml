@@ -6,3 +6,39 @@ resources:
   - ./externalsecret.yaml
   - ./automation-hub-rgw.yaml
   - ./automation-platform.yaml
+patches:
+  - target:
+      group: external-secrets.io
+      kind: ExternalSecret
+      name: automation-hub-s3
+    patch: |-
+      - op: replace
+        path: /spec/secretStoreRef
+        value:
+          kind: SecretStore
+          name: automation-hub-rgw
+      - op: remove
+        path: /spec/dataFrom
+      - op: add
+        path: /spec/data
+        value:
+          - secretKey: AWS_ACCESS_KEY_ID
+            remoteRef:
+              key: automation-hub-rgw
+              property: AWS_ACCESS_KEY_ID
+          - secretKey: AWS_SECRET_ACCESS_KEY
+            remoteRef:
+              key: automation-hub-rgw
+              property: AWS_SECRET_ACCESS_KEY
+      - op: replace
+        path: /spec/target/template/data/s3-access-key-id
+        value: "{{ .AWS_ACCESS_KEY_ID }}"
+      - op: replace
+        path: /spec/target/template/data/s3-bucket-name
+        value: automation-hub-neptune
+      - op: replace
+        path: /spec/target/template/data/s3-endpoint
+        value: http://rook-ceph-rgw-ocs-storagecluster-cephobjectstore.openshift-storage.svc:80
+      - op: replace
+        path: /spec/target/template/data/s3-secret-access-key
+        value: "{{ .AWS_SECRET_ACCESS_KEY }}"
