@@ -4,7 +4,7 @@ kind: ObjectBucketClaim
 metadata:
   name: automation-hub-rgw
 spec:
-  generateBucketName: automation-hub
+  bucketName: automation-hub-neptune
   storageClassName: ocs-storagecluster-ceph-rgw
 ---
 apiVersion: v1
