@@ -5,7 +5,7 @@ kind: Kustomization
 namespace: flux-system
 resources:
   - ./bjw-s.yaml
-  - ./bootc-charts.yaml
+  - ./netbox-community.yaml
   - ./cloudnative-pg.yaml
   - ./external-secrets.yaml
   - ./hashicorp.yaml
