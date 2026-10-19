@@ -108,7 +108,8 @@ spec:
       image:
         repository: library/busybox
         tag: 1.38.0
-      securityContext: {}
+      securityContext:
+        enabled: true
     worker:
       enabled: true
       podSecurityContext:
@@ -131,7 +132,8 @@ spec:
         limits:
           memory: 2000Mi
       waitForBackend:
-        containerSecurityContext: {}
+        containerSecurityContext:
+          enabled: true
       updateStrategy:
         type: Recreate
     resources:
