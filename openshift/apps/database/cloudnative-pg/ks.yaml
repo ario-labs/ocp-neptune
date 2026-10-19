@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: onepassword-store
+    - name: cert-manager
   path: ./openshift/apps/database/cloudnative-pg/app
   prune: true
   sourceRef:

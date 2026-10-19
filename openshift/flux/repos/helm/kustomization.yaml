@@ -6,6 +6,7 @@ namespace: flux-system
 resources:
   - ./bjw-s.yaml
   - ./bootc-charts.yaml
+  - ./cloudnative-pg.yaml
   - ./external-secrets.yaml
   - ./hashicorp.yaml
   - ./jetstack.yaml
