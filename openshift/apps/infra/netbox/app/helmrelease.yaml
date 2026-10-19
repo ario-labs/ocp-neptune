@@ -35,11 +35,8 @@ spec:
       existingSecret: netbox-secret
     podSecurityContext:
       enabled: true
-      fsGroup: 1000790000
     securityContext:
       enabled: true
-      runAsUser: 1000790000
-      runAsGroup: 1000790000
       runAsNonRoot: true
       privileged: false
       readOnlyRootFilesystem: true
@@ -111,18 +108,13 @@ spec:
       image:
         repository: library/busybox
         tag: 1.38.0
-      securityContext:
-        runAsUser: 1000790000
-        runAsGroup: 1000790000
+      securityContext: {}
     worker:
       enabled: true
       podSecurityContext:
         enabled: true
-        fsGroup: 1000790000
       securityContext:
         enabled: true
-        runAsUser: 1000790000
-        runAsGroup: 1000790000
         runAsNonRoot: true
         privileged: false
         readOnlyRootFilesystem: true
@@ -139,9 +131,7 @@ spec:
         limits:
           memory: 2000Mi
       waitForBackend:
-        containerSecurityContext:
-          runAsUser: 1000790000
-          runAsGroup: 1000790000
+        containerSecurityContext: {}
       updateStrategy:
         type: Recreate
     resources:
@@ -154,4 +144,8 @@ spec:
       type: Recreate
     commonAnnotations:
       reloader.stakater.com/auto: 'true'
+    global:
+      compatibility:
+        openshift:
+          adaptSecurityContext: force
   timeout: 15m
