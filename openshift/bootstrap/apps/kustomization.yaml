@@ -5,7 +5,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - github.com/fluxcd/flux2/manifests/install?ref=v2.4.0
+  - github.com/fluxcd/flux2/manifests/install?ref=v2.9.6
 patches:
   - patch: |
       apiVersion: apps/v1
@@ -24,7 +24,7 @@ patches:
     target:
       kind: Deployment
       labelSelector: app.kubernetes.io/part-of=flux
-  # Remove image automation and image reflector controllers
+  # Keep the existing four-controller installation; omit optional controllers.
   - patch: |
       $patch: delete
       apiVersion: apps/v1
@@ -33,7 +33,16 @@ patches:
         name: all
     target:
       kind: Deployment
-      name: (image-automation-controller|image-reflector-controller)
+      name: (image-automation-controller|image-reflector-controller|source-watcher)
+  - patch: |
+      $patch: delete
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: source-watcher
+    target:
+      kind: Service
+      name: source-watcher
   # Remove the built-in network policies
   - patch: |
       $patch: delete
