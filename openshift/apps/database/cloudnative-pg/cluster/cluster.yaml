@@ -12,6 +12,8 @@ spec:
   # Allow brief infrastructure interruptions to recover before promoting a replica.
   failoverDelay: 60
   primaryUpdateStrategy: unsupervised
+  # Bound client draining before PostgreSQL proceeds with a fast shutdown.
+  smartShutdownTimeout: 30
   storage:
     size: 60Gi
     storageClass: ocs-storagecluster-ceph-rbd
@@ -31,21 +33,9 @@ spec:
       memory: 2Gi
   monitoring:
     enablePodMonitor: true
-  backup:
-    retentionPolicy: 7d
-    barmanObjectStore:
-      data:
-        compression: bzip2
-      wal:
-        compression: bzip2
-        maxParallel: 8
-      destinationPath: s3://ocp-neptune-cloudnative-pg/
-      endpointURL: https://${SECRET_CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
-      serverName: postgres
-      s3Credentials:
-        accessKeyId:
-          name: cloudnative-pg-secret
-          key: aws-access-key-id
-        secretAccessKey:
-          name: cloudnative-pg-secret
-          key: aws-secret-access-key
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: postgres-backups
+        serverName: postgres
