@@ -18,9 +18,6 @@ spec:
     remediation:
       retries: 3
   upgrade:
-    # The v4 selector change requires replacing the Deployment once.
-    serverSideApply: disabled
-    force: true
     cleanupOnFail: true
     remediation:
       strategy: rollback
@@ -67,8 +64,9 @@ spec:
             resources:
               requests:
                 cpu: 10m
+                memory: 64Mi
               limits:
-                memory: 128Mi
+                memory: 512Mi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
