@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://helm.releases.hashicorp.com
       chart: vault
-      version: 0.29.1
+      version: 0.34.1
       sourceRef:
         kind: HelmRepository
         name: hashicorp
@@ -22,7 +22,8 @@ spec:
   upgrade:
     cleanupOnFail: true
     remediation:
-      retries: 3
+      # Vault storage upgrades must not automatically roll back to an older binary.
+      retries: 0
   uninstall:
     keepHistory: false
   values:
@@ -33,7 +34,7 @@ spec:
       enabled: true
       image:
         repository: "docker.io/hashicorp/vault"
-        tag: "1.19.5"
+        tag: "2.2.0@sha256:e0acd3c681bdf57f002d7214e5d050b876e1704678005c6b0406dd96a65be919"
       updateStrategyType: RollingUpdate
       readinessProbe:
         enabled: true
