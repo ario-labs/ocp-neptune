@@ -1,0 +1,91 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: netbox-media
+spec:
+  bucketName: ocp-neptune-netbox
+  storageClassName: ocs-storagecluster-ceph-rgw
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: netbox-storage-reader
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: netbox-storage-reader
+rules:
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["netbox-media"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["authorization.k8s.io"]
+    resources: ["selfsubjectrulesreviews"]
+    verbs: ["create"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: netbox-storage-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: netbox-storage-reader
+subjects:
+  - kind: ServiceAccount
+    name: netbox-storage-reader
+    namespace: infra
+---
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: netbox-storage
+spec:
+  provider:
+    kubernetes:
+      remoteNamespace: infra
+      server:
+        caProvider:
+          type: ConfigMap
+          name: kube-root-ca.crt
+          key: ca.crt
+      auth:
+        serviceAccount:
+          name: netbox-storage-reader
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: netbox-storage
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: netbox-storage
+  target:
+    name: netbox-storage
+    creationPolicy: Owner
+    template:
+      engineVersion: v2
+      data:
+        storage.yaml: |
+          STORAGES:
+            default:
+              BACKEND: storages.backends.s3.S3Storage
+              OPTIONS:
+                access_key: {{ .access_key | toJson }}
+                secret_key: {{ .secret_key | toJson }}
+                bucket_name: ocp-neptune-netbox
+                endpoint_url: https://ocs-storagecluster-cephobjectstore-secure-openshift-storage.apps.neptune.ansible.show
+                region_name: us-east-1
+                addressing_style: path
+  data:
+    - secretKey: access_key
+      remoteRef:
+        key: netbox-media
+        property: AWS_ACCESS_KEY_ID
+    - secretKey: secret_key
+      remoteRef:
+        key: netbox-media
+        property: AWS_SECRET_ACCESS_KEY
